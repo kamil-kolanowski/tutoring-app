@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import {db} from "./db"
 
 function App() {
+  db.open();
   return (
     <div className="App">
       <header className="App-header">
