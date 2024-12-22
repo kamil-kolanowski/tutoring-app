@@ -1,16 +1,17 @@
 import Dexie from "dexie"
 import relationships from 'dexie-relationships'
 
+
 export const db = new Dexie("tutoringAppDb", {addons: [relationships]});
 
-db.version(1).stores({
-    // todos: '++id, title, completed'
-    teachers: '++teacherId, email, password, firstName, secondName, subjects, hourlyRate',
+db.version(7).stores({
+    teachers: '++teacherId, email, password, firstName, secondName, subjects, hourlyRate, image',
     students: '++studentId, email, password, firstName, secondName, isAdult',
     parents: '++parentId, email, password, firstName, secondName, studentId -> students.studentId',
     company: '++companyId, email, password, firstName, secondName',
     lessons: '++lessonId, teacherId -> teachers.teacherId, studentId -> students.studentId, subject, lessonDate, price, status',
-    reviews: '++reviewId, teacherId -> teachers.teacherId, reviewerName, stars, comment'
+    reviews: '++reviewId, teacherId -> teachers.teacherId, reviewerName, stars, comment',
+    // userLocalSession: '++sessionId, userData'
 });
 
 // db.open()
@@ -19,7 +20,7 @@ const addNew = async () => {
     const teachers = await db.teachers.toArray()
     if (teachers.length === 0 ) {
 
-        db.transaction('rw', [db.teachers, db.students, db.parents, db.company, db.lessons], function () {
+        db.transaction('rw', [db.teachers, db.students, db.parents, db.company, db.lessons, db.userLocalSession], function () {
             db.teachers.bulkAdd([
                 {
                     teacherId: 1, 
@@ -28,7 +29,8 @@ const addNew = async () => {
                     firstName: 'Jan', 
                     secondName: 'Nowak', 
                     subjects: ['matematyka', 'fizyka'], 
-                    hourlyRate: 120
+                    hourlyRate: 120,
+                    image: null
                 },
                 {
                     teacherId: 2, 
@@ -37,7 +39,8 @@ const addNew = async () => {
                     firstName: 'Paweł', 
                     secondName: 'Kowalski', 
                     subjects: ['język polski', 'geografia'], 
-                    hourlyRate: 90
+                    hourlyRate: 90,
+                    image: null
                 }
             ]);
 
@@ -79,7 +82,7 @@ const addNew = async () => {
                     firstName: "Eliasz", 
                     secondName: 'Mózg'
                 }
-            )
+            );
 
             db.lessons.bulkAdd([
                 {
@@ -110,6 +113,11 @@ const addNew = async () => {
                     status: 'upcoming'
                 }
             ])
+
+            // db.userLocalSession.add({
+            //     sessionId: 1,
+            //     userData: ''
+            // });
 
         })
     }
