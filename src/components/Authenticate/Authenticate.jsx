@@ -1,11 +1,20 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import { Button } from '@mui/material'
 import styles from './Authenticate.module.scss'
+import { useNavigate } from "react-router";
+import { getCookie } from './../../functions/cookies';
 
 export default function Authenticate() {
     const [register, setRegister] = useState(false)
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (getCookie("userData")) {
+        navigate('/')
+      }
+    }, [navigate])
 
     if (!register) {
         return (
