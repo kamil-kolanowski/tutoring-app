@@ -4,6 +4,7 @@ import {db} from "../../functions/db"
 import { useNavigate } from 'react-router';
 import { setCookie } from "../../functions/cookies";
 import styles from './Login.module.scss'
+import bcrypt from 'bcryptjs';
 
 
 export default function Login() {
@@ -53,14 +54,21 @@ export default function Login() {
     }
     
     const userPassword = userFetchedData[0].password
-    if (userPassword !== password) {
-      setErrMsgs({...errMsgs, password: "Podano błędne hasło"})
-    } else {
-      setErrMsgs({ email: "", password: ""})
-      setCookie("userData", JSON.stringify(userFetchedData[0]), 7);
-      setCookie("userType", userType, 7);
-      navigate('/')
-    }
+
+
+    bcrypt.compare(password, userPassword, (err, isMatch) => {
+          if (err) {
+            console.log(err)
+          } else if (!isMatch) {
+            setErrMsgs({...errMsgs, password: "Podano błędne hasło"})
+          } else {
+            setErrMsgs({ email: "", password: ""})
+            setCookie("userData", JSON.stringify(userFetchedData[0]), 7);
+            setCookie("userType", userType, 7);
+            navigate('/')
+          }
+        })
+
   }
 
   

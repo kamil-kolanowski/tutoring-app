@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
-import { Typography, Button, FormControl, InputLabel, Select, MenuItem , TextField} from '@mui/material'
-import styles from "./Register.module.scss"
-import { validate} from '../../functions/validate'
-import {db} from "../../functions/db"
+import React, {useState} from 'react';
+import { Typography, Button, FormControl, InputLabel, Select, MenuItem , TextField} from '@mui/material';
+import styles from "./Register.module.scss";
+import { validate} from '../../functions/validate';
+import {db} from "../../functions/db";
 import { useNavigate } from 'react-router';
 import { setCookie } from "../../functions/cookies";
-import { generateString } from '../../functions/stringGenerator'
+import { generateString } from '../../functions/stringGenerator';
+import bcrypt from 'bcryptjs';
 
 export default function Register() {
 
@@ -35,6 +36,7 @@ export default function Register() {
   const handleRegister = async () => {
     let fnErrMsgs = validate(registerData)
     setErrMsgs(validate(registerData).errMsgs)
+    const hashedPassword = bcrypt.hashSync(registerData.password, 10)
     
     if (!fnErrMsgs.err) {
       if (userType === "parent") {
@@ -47,7 +49,7 @@ export default function Register() {
               try {
                 db.parents.add({
                   email: registerData.email,
-                  password: registerData.password,
+                  password: hashedPassword,
                   firstName: registerData.firstName, 
                   secondName: registerData.secondName,
                   studentId: childId
@@ -62,7 +64,7 @@ export default function Register() {
         try {
           db.students.add({
             email: registerData.email,
-            password: registerData.password,
+            password: hashedPassword,
             firstName: registerData.firstName, 
             secondName: registerData.secondName,
             isAdult: userType === "minorStudent" ? false : true,
@@ -79,7 +81,7 @@ export default function Register() {
       console.log('bledne dane')
       return;
     }
-      setCookie("userData", JSON.stringify(registerData), 7);
+      setCookie("userData", JSON.stringify({...registerData, password: hashedPassword, checkPassword: hashedPassword}), 7);
       navigate('/')
   }
   
