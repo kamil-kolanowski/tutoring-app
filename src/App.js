@@ -6,8 +6,8 @@ import Home from './components/Home/Home';
 import Teachers from './components/Teachers/Teachers';
 import MyLessons from './components/MyLessons/MyLessons';
 import MyProfile from './components/MyProfile/MyProfile';
-// import Login from './components/Login/Login';
-// import Register from './components/Register/Register'
+import AddLesson from './components/AddLesson/AddLesson';
+import MyReviews from './components/MyReviews/MyReviews'
 import Authenticate from './components/Authenticate/Authenticate';
 import { getCookie } from './functions/cookies';
 import { db } from './functions/db';
@@ -35,6 +35,8 @@ function App() {
             <Route path="/my-lessons" element={<MyLessons />}/>
             <Route path="/my-teachers" element={<MyTeachers />}/>
             <Route path="/my-profile" element={<MyProfile />}/>
+            <Route path="/my-reviews" element={<MyReviews />}/>
+            <Route path="/add-lesson" element={<AddLesson />}/>
             <Route path="/authenticate" element={<Authenticate />}/>
           </Routes>
         </Layout>
