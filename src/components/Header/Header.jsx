@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './Header.module.scss'
 import {Box} from '@mui/material'
 import { NavLink } from 'react-router'
+import { getCookie } from './../../functions/cookies';
 
 export default function Header() {
+  const userType = getCookie("userType")
+  if (! userType) {return <></>}
   return (
     <Box className={styles.container}>
         <Box>
@@ -16,7 +19,7 @@ export default function Header() {
                 Strona główna
             </NavLink>
         </Box>
-        <Box>
+        {(userType=="student" || userType=="parent") && <Box>
             <NavLink
                 to="/teachers"
                 className={({ isActive }) =>
@@ -25,7 +28,7 @@ export default function Header() {
             >
                 Korepetytorzy
             </NavLink>
-        </Box>
+        </Box>}
         <Box>
             <NavLink
                 to="/my-lessons"
@@ -33,9 +36,42 @@ export default function Header() {
                 isActive ? styles.active : ""
                 }
             >
-                Moje zajęcia
+                {userType=="student" ? 'Moje zajęcia' : "Zajęcia dziecka"}
             </NavLink>
         </Box>
+        {(userType=="student" || userType=="parent") && <Box>
+            <NavLink
+                to="/my-teachers"
+                className={({ isActive }) =>
+                isActive ? styles.active : ""
+                }
+            >
+                {userType=="student" ? 'Moi Korepetytorzy' : "Korepetytorzy dziecka"}
+            </NavLink>
+        </Box>}
+        {userType=="teacher" && 
+        <>
+            <Box>
+                <NavLink
+                    to="/my-reviews"
+                    className={({ isActive }) =>
+                    isActive ? styles.active : ""
+                    }
+                >
+                    Moje oceny
+                </NavLink>
+            </Box>
+            <Box>
+                <NavLink
+                    to="/add-lesson"
+                    className={({ isActive }) =>
+                    isActive ? styles.active : ""
+                    }
+                >
+                    Dodaj zajęcia
+                </NavLink>
+            </Box>
+        </>}
         <Box>
             <NavLink
                 to="/my-profile"

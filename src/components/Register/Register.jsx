@@ -81,7 +81,14 @@ export default function Register() {
       console.log('bledne dane')
       return;
     }
+      let cookieUserType;
+      if (userType == "parent") {
+        cookieUserType = "parent"
+      } else {
+        cookieUserType = "student"
+      }
       setCookie("userData", JSON.stringify({...registerData, password: hashedPassword, checkPassword: hashedPassword}), 7);
+      setCookie("userType", cookieUserType, 7);
       navigate('/')
   }
   
@@ -128,6 +135,7 @@ export default function Register() {
             error={errMsgs.password}
             label="Hasło"
             helperText={errMsgs.password}
+            type="password"
             onChange={(ev) => setRegisterData({...registerData, password: ev.target.value})}
           />
         </div>
@@ -138,6 +146,7 @@ export default function Register() {
             error={errMsgs.checkPassword}
             label="Powtórz hasło"
             helperText={errMsgs.checkPassword}
+            type="password"
             onChange={(ev) => setRegisterData({...registerData, checkPassword: ev.target.value})}
           />
         </div>

@@ -11,6 +11,7 @@ import MyProfile from './components/MyProfile/MyProfile';
 import Authenticate from './components/Authenticate/Authenticate';
 import { getCookie } from './functions/cookies';
 import { db } from './functions/db';
+import MyTeachers from './components/MyTeachers/MyTeachers';
 
 
 function App() {
@@ -26,13 +27,13 @@ function App() {
   }, [navigate])
   
 
-
   return (
         <Layout>
           <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/teachers" element={<Teachers />}/>
             <Route path="/my-lessons" element={<MyLessons />}/>
+            <Route path="/my-teachers" element={<MyTeachers />}/>
             <Route path="/my-profile" element={<MyProfile />}/>
             <Route path="/authenticate" element={<Authenticate />}/>
           </Routes>
