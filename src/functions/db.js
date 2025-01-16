@@ -5,12 +5,12 @@ import relationships from 'dexie-relationships'
 
 export const db = new Dexie("tutoringAppDb", {addons: [relationships]});
 
-db.version(9).stores({
+db.version(10).stores({
     teachers: '++teacherId, email, password, firstName, secondName, subjects, hourlyRate, image',
     students: '++studentId, email, password, firstName, secondName, isAdult, childCode',
     parents: '++parentId, email, password, firstName, secondName, studentId -> students.studentId',
     company: '++companyId, email, password, firstName, secondName',
-    lessons: '++lessonId, teacherId -> teachers.teacherId, studentId -> students.studentId, subject, lessonDate, price, status',
+    lessons: '++lessonId, teacherId -> teachers.teacherId, studentId -> students.studentId, subject, lessonDate, lessonTime, price, status',
     reviews: '++reviewId, teacherId -> teachers.teacherId, reviewerName, stars, comment',
     // userLocalSession: '++sessionId, userData'
 });
@@ -92,27 +92,30 @@ const addNew = async () => {
                     {
                         // lessonId, 
                         teacherId: 1, 
-                        studentId: 1, 
+                        studentId: 7, 
                         subject: 'matematyka', 
                         lessonDate: '05-01-2025', 
+                        lessonTime: '10:00',
                         price: 120, 
                         status: 'upcoming'
                     },
                     {
                         // lessonId, 
                         teacherId: 2, 
-                        studentId: 1, 
+                        studentId: 7, 
                         subject: 'język polski', 
-                        lessonDate: '09-01-2025', 
+                        lessonDate: '09-01-2025',
+                        lessonTime: "12:00",
                         price: 90, 
                         status: 'upcoming'
                     },
                     {
                         // lessonId, 
                         teacherId: 1, 
-                        studentId: 2, 
+                        studentId: 7, 
                         subject: 'matematyka', 
                         lessonDate: '12-01-2025', 
+                        lessonTime: "17:40",
                         price: 120, 
                         status: 'upcoming'
                     }

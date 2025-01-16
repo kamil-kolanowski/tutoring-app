@@ -87,9 +87,10 @@ export default function Register() {
       } else {
         cookieUserType = "student"
       }
-      setCookie("userData", JSON.stringify({...registerData, password: hashedPassword, checkPassword: hashedPassword}), 7);
-      setCookie("userType", cookieUserType, 7);
-      navigate('/')
+      // setCookie("userData", JSON.stringify({...registerData, password: hashedPassword, checkPassword: hashedPassword}), 7);
+      // setCookie("userType", cookieUserType, 7);
+      // navigate('/')
+      window.location.reload();
   }
   
   console.log(userType, userType === "minorStudent" ? false : true)
