@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './MyLessons.module.scss';
 import { Typography, Button } from '@mui/material';
 import { getCookie } from './../../functions/cookies';
-import { getLessonsByStudentId, lessonCancel } from '../../functions/dbQueries';
-import { findTeacherById } from '../../functions/findTeacherById';
+import { getLessonsByStudentId, lessonCancel, findTeacherById } from '../../functions/dbQueries';
 import { formatDate } from '../../functions/date';
 import { delay } from '../../functions/delay';
 

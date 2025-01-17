@@ -3,7 +3,7 @@ import { getCookie } from './../../functions/cookies';
 import styles from './Home.module.scss';
 import { Button, Typography, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 import { getDate } from '../../functions/date';
-import { getLessonsByStudentId, getSubjects, getAvailableLessonsBySubject, lessonSignUp } from '../../functions/dbQueries';
+import { getLessonsByStudentId, getSubjects, getAvailableLessonsBySubject, lessonSignUp, findTeacherById } from '../../functions/dbQueries';
 import { delay } from '../../functions/delay';
 
 
@@ -61,14 +61,24 @@ export default function Home() {
   },[userData.studentId]); 
 
   const handleSearchLessons = async () => {
-      if (selectedSubject === '') return
-      try {
-        const freeLessons = await getAvailableLessonsBySubject(selectedSubject);
-        setSearchedLessons(freeLessons);
-      } catch (error) {
-        console.error("Błąd podczas pobierania wolnych lekcji:", error);
-      }
-  }
+    if (selectedSubject === '') return;
+    try {
+      const freeLessons = await getAvailableLessonsBySubject(selectedSubject);
+      const lessonsWithTeachers = await Promise.all(
+        freeLessons.map(async (lesson) => {
+          const teacher = await findTeacherById(lesson.teacherId);
+          return {
+            ...lesson,
+            teacherName: teacher ? `${teacher.firstName} ${teacher.secondName}` : "Nie znaleziono nauczyciela",
+          };
+        })
+      );
+
+      setSearchedLessons(lessonsWithTeachers);
+    } catch (error) {
+      console.error("Błąd podczas pobierania wolnych lekcji:", error);
+    }
+  };
 
   const handleLessonSignUp = async (lessonId) => {
     try {
@@ -132,7 +142,7 @@ export default function Home() {
               <thead><tr><th>Data</th><th>Godzina</th><th>Nauczyciel</th></tr><tr></tr></thead>
 
               {searchedLessons.map((lesson, id) => {
-                return (<tbody key={id}><tr className={styles.lessonRow}><td>{lesson.lessonDate}</td><td>{lesson.lessonTime}</td><td>{lesson.teacherId}</td><td><Button onClick={() => handleLessonSignUp(lesson.lessonId)} variant="outlined" color="gray">Zapisz się</Button></td></tr></tbody>)
+                return (<tbody key={id}><tr className={styles.lessonRow}><td>{lesson.lessonDate}</td><td>{lesson.lessonTime}</td><td>{lesson.teacherName}</td><td><Button onClick={() => handleLessonSignUp(lesson.lessonId)} variant="outlined" color="gray">Zapisz się</Button></td></tr></tbody>)
               })}
             </table>
             </div>

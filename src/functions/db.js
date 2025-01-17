@@ -5,13 +5,13 @@ import relationships from 'dexie-relationships'
 
 export const db = new Dexie("tutoringAppDb", {addons: [relationships]});
 
-db.version(10).stores({
+db.version(11).stores({
     teachers: '++teacherId, email, password, firstName, secondName, subjects, hourlyRate, image',
     students: '++studentId, email, password, firstName, secondName, isAdult, childCode',
     parents: '++parentId, email, password, firstName, secondName, studentId -> students.studentId',
     company: '++companyId, email, password, firstName, secondName',
     lessons: '++lessonId, teacherId -> teachers.teacherId, studentId -> students.studentId, subject, lessonDate, lessonTime, price, status',
-    reviews: '++reviewId, teacherId -> teachers.teacherId, reviewerName, stars, comment',
+    reviews: '++reviewId, [teacherId+reviewerName], stars, comment',
     // userLocalSession: '++sessionId, userData'
 });
 
