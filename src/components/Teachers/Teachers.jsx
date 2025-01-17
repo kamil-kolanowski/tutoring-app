@@ -4,6 +4,7 @@ import { Typography, Avatar } from '@mui/material';
 import { getTeachers } from '../../functions/dbQueries';
 
 
+
 export default function Teachers() {
   const [teachers, setTeachers] = useState([])
 
@@ -22,6 +23,7 @@ export default function Teachers() {
 
   console.log(teachers)
 
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -33,7 +35,7 @@ export default function Teachers() {
               <Typography variant="h6">{`${teacher.firstName} ${teacher.secondName}`} </Typography>
               {/* <p>Przedmioty:</p> */}
               {teacher.subjects.map(subject => {
-                return <p className={styles.subjectText} >{subject}</p>
+                return <p key={subject} className={styles.subjectText} >{subject}</p>
               })}
             </div>
           })}

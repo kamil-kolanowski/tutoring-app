@@ -8,6 +8,9 @@ import { delay } from '../../functions/delay';
 
 
 export default function Home() {
+
+  const [loading, setLoading] = useState(true); 
+
   const userData = JSON.parse(getCookie("userData"));
   // const userType = getCookie("userType");
 
@@ -36,6 +39,8 @@ export default function Home() {
         setUpcomingLessons(lessons);
       } catch (error) {
         console.error("Błąd podczas pobierania lekcji:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,6 +75,7 @@ export default function Home() {
       const result = await lessonSignUp(userData.studentId, lessonId);
       console.log(result);
       setLessonSignUpResult(result)
+      setLoading(true)
       await delay(5000);
       window.location.reload();
   } catch (error) {
@@ -85,14 +91,21 @@ export default function Home() {
           <Typography variant="h4" gutterBottom>Dzisiaj jest {currentDate}</Typography>
         </div>
         <div className={styles.upcomingLessonsBox}>
-         <Typography variant="h4" gutterBottom>Najblisze zajęcia:{upcomingLessons.length == 0 ? ' brak' : ''}</Typography>
-         <table className={styles.upcomingLessons}>
-         <thead><tr><th>Data</th><th>Godzina</th><th>Przedmiot</th></tr></thead>
+         <Typography variant="h4" gutterBottom>Najblisze zajęcia:</Typography>
+         {upcomingLessons.length == 0 ? <Typography variant="h5">Brak</Typography> : <>
+          {loading ? (
+            <p>Ładowanie zajęć...</p>
+            ) : (
+              <table className={styles.upcomingLessons}>
+                <thead><tr><th>Data</th><th>Godzina</th><th>Przedmiot</th></tr></thead>
 
-         {upcomingLessons.slice(0, 3).map((lesson, id) => {
-          return (<tbody key={id}><tr className={styles.lessonRow}><td>{lesson.lessonDate}</td><td>{lesson.lessonTime}</td><td>{lesson.subject}</td></tr></tbody>)
-         })}
-         </table>
+                {upcomingLessons.slice(0, 3).map((lesson, id) => {
+                return (<tbody key={id}><tr className={styles.lessonRow}><td>{lesson.lessonDate}</td><td>{lesson.lessonTime}</td><td>{lesson.subject}</td></tr></tbody>)
+              })}
+              </table>
+            )}
+            </>
+          }
         </div>
         <div className={styles.searchLessonBox}>
           <Typography variant="h4" gutterBottom>Wyszukaj zajęcia:</Typography>
@@ -113,7 +126,7 @@ export default function Home() {
             <Button variant="outlined" color="gray" onClick={handleSearchLessons}>Szukaj</Button>
           </div>
           <Typography color={'green'} variant="h5" gutterBottom>{lessonSignUpResult}</Typography>
-          {searchedLessons.length > 0 && 
+          {(searchedLessons.length > 0 && !loading) && 
             <div className={styles.searchedLessons}>
               <table className={styles.searchedLessons}>
               <thead><tr><th>Data</th><th>Godzina</th><th>Nauczyciel</th></tr><tr></tr></thead>

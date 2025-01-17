@@ -39,3 +39,12 @@ export const getTeachers = async () => {
     const teachers = await db.teachers.toArray();
     return teachers;
 }
+export const lessonCancel = async ( lessonId) => {
+    const updated = await db.lessons.update(lessonId, { studentId: null });
+
+    if (updated) {
+        return "Pomyślnie anulowano lekcję.";
+    } else {
+        return "Wystąpił błąd podczas anulowania lekcji.";
+    }
+};
