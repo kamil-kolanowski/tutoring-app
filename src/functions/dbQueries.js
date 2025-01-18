@@ -102,3 +102,19 @@ export const addOrUpdateReview = async (teacherId, reviewerId, stars) => {
       console.error('Błąd przy dodawaniu lub zmienianiu oceny:', error);
     }
   };
+
+  export const getStudentNameById = async (studentId) => {
+    try {
+        const student = await db.students.get(studentId); // Pobierz rekord dziecka na podstawie jego ID
+        if (student) {
+            return {
+                firstName: student.firstName,
+                secondName: student.secondName
+            };
+        } else {
+            throw new Error(`Nie znaleziono studenta o ID: ${studentId}`);
+        }
+    } catch (error) {
+        console.error("Błąd podczas pobierania danych dziecka:", error);
+    }
+}

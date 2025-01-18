@@ -1,6 +1,6 @@
 import Dexie from "dexie"
 import relationships from 'dexie-relationships'
-
+import bcrypt from 'bcryptjs';
 
 
 export const db = new Dexie("tutoringAppDb", {addons: [relationships]});
@@ -27,7 +27,7 @@ const addNew = async () => {
                     {
                         teacherId: 1, 
                         email: "jannowak@wp.pl", 
-                        password: "Janek1980!", 
+                        password: bcrypt.hashSync("Janek1980!", 10), 
                         firstName: 'Jan', 
                         secondName: 'Nowak', 
                         subjects: ['matematyka', 'fizyka'], 
@@ -37,7 +37,7 @@ const addNew = async () => {
                     {
                         teacherId: 2, 
                         email: "pawelkowalski@wp.pl", 
-                        password: "Pawelek1975@", 
+                        password: bcrypt.hashSync("Pawelek1975@",10), 
                         firstName: 'Paweł', 
                         secondName: 'Kowalski', 
                         subjects: ['język polski', 'geografia'], 
@@ -50,7 +50,7 @@ const addNew = async () => {
                     {
                         studentId: 1, 
                         email: 'emilakrol@wp.pl', 
-                        password: "Emilka2002!", 
+                        password: bcrypt.hashSync("Emilka2002!", 10), 
                         firstName: "Emilia", 
                         secondName: "Król", 
                         isAdult: true,
@@ -59,7 +59,7 @@ const addNew = async () => {
                     {
                         studentId: 2, 
                         email: 'filiptygrysiak@wp.pl', 
-                        password: "Filipek2006@", 
+                        password: bcrypt.hashSync("Filipek2006@", 10), 
                         firstName: "Filip", 
                         secondName: "Tygrysiak", 
                         isAdult: false,
@@ -71,7 +71,7 @@ const addNew = async () => {
                     {
                         // parentId, 
                         email: "grzegorztygrysiak@o2.pl", 
-                        password: "Grzechu1980@", 
+                        password: bcrypt.hashSync("Grzechu1980@", 10), 
                         firstName: "Grzegorz", 
                         secondName: "Tygrysiak", 
                         studentId: 2
@@ -81,10 +81,10 @@ const addNew = async () => {
                 db.company.add(
                     {
                         // companyId, 
-                        email: "eliaszmusk@wp.pl", 
-                        password: "Eliasz1960!", 
-                        firstName: "Eliasz", 
-                        secondName: 'Mózg'
+                        email: "administrator@o2.pl", 
+                        password: bcrypt.hashSync("admin", 10), 
+                        firstName: "Admin 1", 
+                        secondName: 'Admin 1'
                     }
                 );
     
