@@ -13,6 +13,7 @@ import { getCookie } from './functions/cookies';
 import { db } from './functions/db';
 import MyTeachers from './components/MyTeachers/MyTeachers';
 import RegisterTeacher from './components/RegisterTeacher/RegisterTeacher';
+import AllReviews from './components/AllReviews/AllReviews';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/my-teachers" element={<MyTeachers />}/>
             <Route path="/my-profile" element={<MyProfile />}/>
             <Route path="/my-reviews" element={<MyReviews />}/>
+            <Route path="/all-reviews" element={<AllReviews />}/>
             <Route path="/add-lesson" element={<AddLesson />}/>
             <Route path="/register-teacher" element={<RegisterTeacher />}/>
             <Route path="/authenticate" element={<Authenticate />}/>

@@ -89,6 +89,16 @@ export default function Header() {
                 Zarejestruj korepetytora
             </NavLink>
             </Box>
+            <Box>
+            <NavLink
+                to="/all-reviews"
+                className={({ isActive }) =>
+                isActive ? styles.active : ""
+                }
+            >
+                Oceny korepetytorów
+            </NavLink>
+            </Box>
         </>}
         <Box>
             <NavLink

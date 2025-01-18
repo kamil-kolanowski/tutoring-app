@@ -108,19 +108,24 @@ export default function MyProfile() {
           {userType==="teacher" && 
             <>
               <div className={styles.profilePicture}>
+              <Typography variant="h5">Zdjęcie profilowe:</Typography>
                 {profilePicture ? (
-                  <img src={profilePicture} alt="Profilowe" className={styles.profileImage} />
+                  <img src={profilePicture} alt="zzdjecie profilowe" className={styles.profileImage} />
                 ) : (
                   <Typography variant="h5">Brak zdjęcia profilowego</Typography>
                 )}
               </div>
-              <Button variant="outlined" color="gray"component="label" className={styles.imageButton}>
-                Zmień zdjęcie
-                <input type="file" hidden onChange={handleProfilePictureChange} />
-              </Button>
+              <div className={styles.buttons}>
+                <Button variant="outlined" color="gray"component="label" className={styles.imageButton}>
+                  Zmień zdjęcie
+                  <input type="file" hidden onChange={handleProfilePictureChange} />
+                </Button>
+              </div>
             </>
           }
-          <Button className={styles.logoutButton} variant="outlined" color="gray" onClick={handleLogout}>Wyloguj się</Button>
+
+          <Button className={styles.logoutButton} variant="outlined" color="error" onClick={handleLogout}>Wyloguj się</Button>
+              
         </div>
       </div>
     </div>
