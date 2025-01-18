@@ -117,7 +117,7 @@ export const addOrUpdateReview = async (teacherId, reviewerId, stars, comment) =
 
   export const getStudentNameById = async (studentId) => {
     try {
-        const student = await db.students.get(studentId); // Pobierz rekord dziecka na podstawie jego ID
+        const student = await db.students.get(studentId); 
         if (student) {
             return {
                 firstName: student.firstName,
@@ -139,3 +139,12 @@ export const getTeacherReviews = async (teacherId) => {
         console.error("Błąd podczas pobierania recenzji nauczyciela:", error);
     }
 };
+
+export const deleteLessonById = async (lessonId) => {
+    try {
+      await db.lessons.delete(lessonId); // Usuwanie lekcji po ID
+      console.log(`Lekcja o ID ${lessonId} została usunięta.`);
+    } catch (error) {
+      console.error("Błąd podczas usuwania lekcji:", error);
+    }
+  };

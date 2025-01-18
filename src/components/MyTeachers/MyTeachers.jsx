@@ -61,27 +61,31 @@ export default function MyTeachers() {
       <div className={styles.container}>
         <div className={styles.content}>
           <Typography variant="h4" gutterBottom>Moi korepetytorzy</Typography>
-          {teachers.length == 0 ? (
+          {teachers.length === 0 ? (
             <Typography variant="h5">Brak</Typography>
             ) : (
               <div className={styles.teachersBox}>
-                {teachers.map((teacher, id) => (
-                  <div key={id} className={styles.teacherBox}>
-                    <Avatar
-                      alt={`${teacher.firstName} ${teacher.secondName}`}
-                      src="./images/avatar.jpg"
-                      sx={{ width: 124, height: 124, marginBottom: '20px' }}
-                    />
-                    <Typography variant="h6">{`${teacher.firstName} ${teacher.secondName}`}</Typography>
-                    {((userType == "student" && userData.isAdult) || userType=="parent") && 
-                    <Button
-                      onClick={() => handleClickOpen(teacher.teacherId)} 
-                      variant="outlined"
-                    >
-                      Wystaw ocenę
-                    </Button>}
-                  </div>
-                ))}
+                {teachers.map((teacher, id) => {
+                  const teacherImage = teacher.image ? URL.createObjectURL(teacher.image) : './images/avatar.jpg';
+
+                  return (
+                    <div key={id} className={styles.teacherBox}>
+                      <Avatar
+                        alt={`${teacher.firstName} ${teacher.secondName}`}
+                        src={teacherImage}
+                        sx={{ width: 124, height: 124, marginBottom: '20px' }}
+                      />
+                      <Typography variant="h6">{`${teacher.firstName} ${teacher.secondName}`} </Typography>
+                      {((userType === "student" && userData.isAdult) || userType==="parent") && 
+                        <Button
+                          onClick={() => handleClickOpen(teacher.teacherId)} 
+                          variant="outlined"
+                        >
+                          Wystaw ocenę
+                        </Button>}
+                    </div>
+                  );
+                })}
               </div>
             )}
         </div>

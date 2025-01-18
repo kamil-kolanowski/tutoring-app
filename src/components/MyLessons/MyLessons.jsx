@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './MyLessons.module.scss';
 import { Typography, Button } from '@mui/material';
 import { getCookie } from './../../functions/cookies';
-import { getLessonsByStudentId, getLessonsByTeacherId, lessonCancel, findTeacherById, findStudentById } from '../../functions/dbQueries'; // Importujemy getLessonsByTeacherId
+import { getLessonsByStudentId, getLessonsByTeacherId, lessonCancel, findTeacherById, findStudentById, deleteLessonById } from '../../functions/dbQueries'; 
 import { formatDate } from '../../functions/date';
 import { delay } from '../../functions/delay';
 
@@ -72,6 +72,19 @@ export default function MyLessons() {
     }
   };
 
+  const handleLessonDelete = async (lessonId) => {
+    try {
+      const result = await deleteLessonById(lessonId);
+      console.log(result);
+      setLessonCancelResult(result);
+      setLoading(true);
+      await delay(5000);
+      window.location.reload();
+    } catch (error) {
+      console.error("Błąd:", error);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -111,6 +124,9 @@ export default function MyLessons() {
                     <td>{lesson.status}</td>
                     {((userType == "student" && userData.isAdult) || userType=="parent") && 
                       <td><Button onClick={() => handleLessonCancel(lesson.lessonId)} variant="outlined" color="red">Anuluj zajęcia</Button></td>
+                    }
+                    {(userType=="teacher") && 
+                      <td><Button onClick={() => handleLessonDelete(lesson.lessonId)} variant="outlined" color="red">Usuń zajęcia</Button></td>
                     }
                   </tr>
                 ))}
