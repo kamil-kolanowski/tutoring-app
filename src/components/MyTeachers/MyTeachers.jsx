@@ -17,7 +17,7 @@ export default function MyTeachers() {
   const [teachers, setTeachers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedTeacherId, setSelectedTeacherId] = useState(null);
-  const [comment, setComment] = useState(""); // Nowa zmienna do komentarza
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     const fetchTeachers = async () => {
@@ -34,7 +34,7 @@ export default function MyTeachers() {
   const handleClickOpen = (teacherId) => {
     setSelectedTeacherId(teacherId);
     setDialogOpen(true);
-    setComment(""); // Resetowanie komentarza przy otwieraniu dialogu
+    setComment(""); 
   };
 
   const handleClose = () => {
@@ -48,7 +48,7 @@ export default function MyTeachers() {
     const grade = formData.get('grade');
 
     try {
-      await addOrUpdateReview(selectedTeacherId, userData.studentId, grade, comment); // Dodanie komentarza do funkcji
+      await addOrUpdateReview(selectedTeacherId, userData.studentId, grade, comment); 
     } catch (error) {
       console.error('Błąd podczas dodawania oceny: ', error);
     }
@@ -131,7 +131,7 @@ export default function MyTeachers() {
             label="Twój komentarz"
             type="text"
             value={comment}
-            onChange={(e) => setComment(e.target.value)} // Aktualizacja komentarza
+            onChange={(e) => setComment(e.target.value)}
             fullWidth
             multiline
             rows={4}

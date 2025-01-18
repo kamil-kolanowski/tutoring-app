@@ -14,7 +14,6 @@ db.version(11).stores({
     reviews: '++reviewId, [teacherId+reviewerName], stars, comment',
 });
 
-// db.open()
 
 const addNew = async () => {
     const teachers = await db.teachers.toArray()
@@ -47,7 +46,7 @@ const addNew = async () => {
     
                 db.students.bulkAdd([
                     {
-                        studentId: 1, 
+                        studentId: 1,
                         email: 'emilakrol@wp.pl', 
                         password: bcrypt.hashSync("Emilka2002!", 10), 
                         firstName: "Emilia", 
@@ -56,7 +55,7 @@ const addNew = async () => {
                         childCode: ''
                     },
                     {
-                        studentId: 2, 
+                        studentId: 2,
                         email: 'filiptygrysiak@wp.pl', 
                         password: bcrypt.hashSync("Filipek2006@", 10), 
                         firstName: "Filip", 
@@ -68,7 +67,6 @@ const addNew = async () => {
     
                 db.parents.add(
                     {
-                        // parentId, 
                         email: "grzegorztygrysiak@o2.pl", 
                         password: bcrypt.hashSync("Grzechu1980@", 10), 
                         firstName: "Grzegorz", 
@@ -78,8 +76,7 @@ const addNew = async () => {
                 );
     
                 db.company.add(
-                    {
-                        // companyId, 
+                    { 
                         email: "administrator@o2.pl", 
                         password: bcrypt.hashSync("admin", 10), 
                         firstName: "Admin 1", 
@@ -89,7 +86,6 @@ const addNew = async () => {
     
                 db.lessons.bulkAdd([
                     {
-                        // lessonId, 
                         teacherId: 1, 
                         studentId: 7, 
                         subject: 'matematyka', 
@@ -99,7 +95,6 @@ const addNew = async () => {
                         status: 'Wolny termin'
                     },
                     {
-                        // lessonId, 
                         teacherId: 2, 
                         studentId: 7, 
                         subject: 'język polski', 
@@ -109,7 +104,6 @@ const addNew = async () => {
                         status: 'Wolny termin'
                     },
                     {
-                        // lessonId, 
                         teacherId: 1, 
                         studentId: 7, 
                         subject: 'matematyka', 

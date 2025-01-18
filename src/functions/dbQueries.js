@@ -142,7 +142,7 @@ export const getTeacherReviews = async (teacherId) => {
 
 export const deleteLessonById = async (lessonId) => {
     try {
-      await db.lessons.delete(lessonId); // Usuwanie lekcji po ID
+      await db.lessons.delete(lessonId); 
       console.log(`Lekcja o ID ${lessonId} została usunięta.`);
     } catch (error) {
       console.error("Błąd podczas usuwania lekcji:", error);
