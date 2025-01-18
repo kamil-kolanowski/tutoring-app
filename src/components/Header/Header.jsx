@@ -29,26 +29,31 @@ export default function Header() {
                 Korepetytorzy
             </NavLink>
         </Box>}
-        <Box>
-            <NavLink
-                to="/my-lessons"
-                className={({ isActive }) =>
-                isActive ? styles.active : ""
-                }
-            >
-                {userType=="student" ? 'Moje zajęcia' : "Zajęcia dziecka"}
-            </NavLink>
-        </Box>
-        {(userType=="student" || userType=="parent") && <Box>
-            <NavLink
-                to="/my-teachers"
-                className={({ isActive }) =>
-                isActive ? styles.active : ""
-                }
-            >
-                {userType=="student" ? 'Moi Korepetytorzy' : "Korepetytorzy dziecka"}
-            </NavLink>
-        </Box>}
+        {(userType=="student" || userType=="parent" || userType=="teacher") && 
+        
+            <Box>
+                <NavLink
+                    to="/my-lessons"
+                    className={({ isActive }) =>
+                    isActive ? styles.active : ""
+                    }
+                >
+                    {(userType=="student" || userType=="teacher") ? 'Moje zajęcia' : "Zajęcia dziecka"}
+                </NavLink>
+            </Box>
+        }
+        {(userType=="student" || userType=="parent") && 
+            <Box>
+                <NavLink
+                    to="/my-teachers"
+                    className={({ isActive }) =>
+                    isActive ? styles.active : ""
+                    }
+                >
+                    {userType=="student" ? 'Moi Korepetytorzy' : "Korepetytorzy dziecka"}
+                </NavLink>
+            </Box>
+        }
         {userType=="teacher" && 
         <>
             <Box>
@@ -70,6 +75,19 @@ export default function Header() {
                 >
                     Dodaj zajęcia
                 </NavLink>
+            </Box>
+        </>}
+        {userType=="company" && 
+        <>
+            <Box>
+            <NavLink
+                to="/register-teacher"
+                className={({ isActive }) =>
+                isActive ? styles.active : ""
+                }
+            >
+                Zarejestruj korepetytora
+            </NavLink>
             </Box>
         </>}
         <Box>

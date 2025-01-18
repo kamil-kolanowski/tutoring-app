@@ -12,7 +12,6 @@ db.version(11).stores({
     company: '++companyId, email, password, firstName, secondName',
     lessons: '++lessonId, teacherId -> teachers.teacherId, studentId -> students.studentId, subject, lessonDate, lessonTime, price, status',
     reviews: '++reviewId, [teacherId+reviewerName], stars, comment',
-    // userLocalSession: '++sessionId, userData'
 });
 
 // db.open()
@@ -97,7 +96,7 @@ const addNew = async () => {
                         lessonDate: '05-01-2025', 
                         lessonTime: '10:00',
                         price: 120, 
-                        status: 'upcoming'
+                        status: 'Wolny termin'
                     },
                     {
                         // lessonId, 
@@ -107,7 +106,7 @@ const addNew = async () => {
                         lessonDate: '09-01-2025',
                         lessonTime: "12:00",
                         price: 90, 
-                        status: 'upcoming'
+                        status: 'Wolny termin'
                     },
                     {
                         // lessonId, 
@@ -117,7 +116,7 @@ const addNew = async () => {
                         lessonDate: '12-01-2025', 
                         lessonTime: "17:40",
                         price: 120, 
-                        status: 'upcoming'
+                        status: 'Wolny termin'
                     }
                 ])
     

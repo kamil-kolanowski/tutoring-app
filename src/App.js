@@ -12,6 +12,7 @@ import Authenticate from './components/Authenticate/Authenticate';
 import { getCookie } from './functions/cookies';
 import { db } from './functions/db';
 import MyTeachers from './components/MyTeachers/MyTeachers';
+import RegisterTeacher from './components/RegisterTeacher/RegisterTeacher';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path="/my-profile" element={<MyProfile />}/>
             <Route path="/my-reviews" element={<MyReviews />}/>
             <Route path="/add-lesson" element={<AddLesson />}/>
+            <Route path="/register-teacher" element={<RegisterTeacher />}/>
             <Route path="/authenticate" element={<Authenticate />}/>
           </Routes>
         </Layout>

@@ -12,10 +12,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function MyTeachers() {
   const userData = JSON.parse(getCookie('userData'));
+  const userType = getCookie("userType");
 
   const [teachers, setTeachers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedTeacherId, setSelectedTeacherId] = useState(null); // Przechowuje ID nauczyciela do oceny
+  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
+  const [comment, setComment] = useState(""); // Nowa zmienna do komentarza
 
   useEffect(() => {
     const fetchTeachers = async () => {
@@ -32,6 +34,7 @@ export default function MyTeachers() {
   const handleClickOpen = (teacherId) => {
     setSelectedTeacherId(teacherId);
     setDialogOpen(true);
+    setComment(""); // Resetowanie komentarza przy otwieraniu dialogu
   };
 
   const handleClose = () => {
@@ -45,7 +48,7 @@ export default function MyTeachers() {
     const grade = formData.get('grade');
 
     try {
-      await addOrUpdateReview(selectedTeacherId, userData.studentId, grade);
+      await addOrUpdateReview(selectedTeacherId, userData.studentId, grade, comment); // Dodanie komentarza do funkcji
     } catch (error) {
       console.error('Błąd podczas dodawania oceny: ', error);
     }
@@ -70,12 +73,13 @@ export default function MyTeachers() {
                       sx={{ width: 124, height: 124, marginBottom: '20px' }}
                     />
                     <Typography variant="h6">{`${teacher.firstName} ${teacher.secondName}`}</Typography>
+                    {((userType == "student" && userData.isAdult) || userType=="parent") && 
                     <Button
-                      onClick={() => handleClickOpen(teacher.teacherId)} // Przekazanie ID nauczyciela
+                      onClick={() => handleClickOpen(teacher.teacherId)} 
                       variant="outlined"
                     >
                       Wystaw ocenę
-                    </Button>
+                    </Button>}
                   </div>
                 ))}
               </div>
@@ -89,14 +93,13 @@ export default function MyTeachers() {
         aria-describedby="dialog-description"
         PaperProps={{
           component: 'form',
-          
-          onSubmit: handleReviewSubmit, // Funkcja obsługi wysyłania oceny
+          onSubmit: handleReviewSubmit, 
         }}
       >
         <DialogTitle id="dialog-title">Wystawianie oceny</DialogTitle>
         <DialogContent>
           <DialogContentText id="dialog-description">
-            Wystaw ocenę korepetytorowi w skali od 1 do 5
+            Wystaw ocenę korepetytorowi w skali od 1 do 5 oraz dodaj komentarz, jeśli chcesz.
           </DialogContentText>
           <TextField
             autoFocus
@@ -115,6 +118,19 @@ export default function MyTeachers() {
               if (value > 5) e.target.value = 5;
             }}
             fullWidth
+            variant="standard"
+          />
+          <TextField
+            margin="dense"
+            id="comment"
+            name="comment"
+            label="Twój komentarz"
+            type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)} // Aktualizacja komentarza
+            fullWidth
+            multiline
+            rows={4}
             variant="standard"
           />
         </DialogContent>

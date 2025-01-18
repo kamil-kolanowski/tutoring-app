@@ -4,9 +4,12 @@ export const getLessonsByStudentId = async (studentId) => {
     const lessonsFetchedData = await db.lessons.where({studentId: studentId}).toArray();
     return lessonsFetchedData;
 }
+export const getLessonsByTeacherId = async (teacherId) => {
+    const lessonsFetchedData = await db.lessons.where({teacherId: teacherId}).toArray();
+    return lessonsFetchedData;
+}
 
 export const getSubjects = async () => {
-    // const today = new Date();
     const lessons = await db.lessons.toArray()
     const subjects = lessons
         .map(lesson => lesson.subject)
@@ -28,7 +31,7 @@ export const getAvailableLessonsBySubject = async (subject) => {
     
 }
 export const lessonSignUp = async (studentId, lessonId) => {
-    const updated = await db.lessons.update(lessonId, { studentId: studentId });
+    const updated = await db.lessons.update(lessonId, { studentId: studentId, status: "Zapisano" });
 
     if (updated) {
         return "Pomyślnie zapisano na lekcję.";
@@ -61,6 +64,15 @@ export const findTeacherById = async (id) => {
         return "Wystąpił błąd podczas wyszukiwania nauczyciela.";
     }
 };
+export const findStudentById = async (id) => {
+    try {
+        const student = await db.students.get(id);
+        return student ? student : "Uczeń o podanym ID nie został znaleziony.";
+    } catch (error) {
+        console.error("Błąd podczas pobierania ucznia:", error);
+        return "Wystąpił błąd podczas wyszukiwania ucznia.";
+    }
+};
 
 
 export const getTeachersByStudentId = async (studentId) => {
@@ -82,7 +94,7 @@ export const getTeachersByStudentId = async (studentId) => {
     }
 };
 
-export const addOrUpdateReview = async (teacherId, reviewerId, stars) => {
+export const addOrUpdateReview = async (teacherId, reviewerId, stars, comment) => {
     try {
       const existingReview = await db.reviews
         .where({ teacherId, reviewerName: reviewerId })
@@ -95,7 +107,7 @@ export const addOrUpdateReview = async (teacherId, reviewerId, stars) => {
           teacherId,
           reviewerName: reviewerId,
           stars,
-          comment: '', 
+          comment, 
         });
       }
     } catch (error) {
@@ -118,3 +130,12 @@ export const addOrUpdateReview = async (teacherId, reviewerId, stars) => {
         console.error("Błąd podczas pobierania danych dziecka:", error);
     }
 }
+
+export const getTeacherReviews = async (teacherId) => {
+    try {
+        const reviews = await db.reviews.where({ teacherId }).toArray();
+        return reviews;
+    } catch (error) {
+        console.error("Błąd podczas pobierania recenzji nauczyciela:", error);
+    }
+};

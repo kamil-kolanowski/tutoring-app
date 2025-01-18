@@ -33,7 +33,7 @@ export default function MyProfile() {
   const handleLogout = () => {
     deleteCookie("userData");
     deleteCookie("userType")
-    navigate('/authentication')
+    navigate('/authenticate')
   }
 
   useEffect(() => {

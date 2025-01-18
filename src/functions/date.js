@@ -30,3 +30,8 @@ export const formatDate = (dateString) => {
     return `${formattedDay}.${formattedMonth}.${formattedYear}`;
 };
 
+
+export const convertToDate = (dateStr) => {
+    const [day, month, year] = dateStr.split('-');
+    return new Date(`${year}-${month}-${day}`);
+  };
