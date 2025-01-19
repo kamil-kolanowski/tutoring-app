@@ -35,7 +35,7 @@ const addNew = async () => {
                     {
                         teacherId: 2, 
                         email: "pawelkowalski@wp.pl", 
-                        password: bcrypt.hashSync("Pawelek1975@",10), 
+                        password: bcrypt.hashSync("Pawello1975@",10), 
                         firstName: 'Paweł', 
                         secondName: 'Kowalski', 
                         subjects: ['język polski', 'geografia'], 
@@ -56,10 +56,10 @@ const addNew = async () => {
                     },
                     {
                         studentId: 2,
-                        email: 'filiptygrysiak@wp.pl', 
+                        email: 'filiprobak@wp.pl', 
                         password: bcrypt.hashSync("Filipek2006@", 10), 
                         firstName: "Filip", 
-                        secondName: "Tygrysiak", 
+                        secondName: "Robak", 
                         isAdult: false,
                         childCode: "SJFRIWUT2J"
                     }
@@ -67,10 +67,10 @@ const addNew = async () => {
     
                 db.parents.add(
                     {
-                        email: "grzegorztygrysiak@o2.pl", 
-                        password: bcrypt.hashSync("Grzechu1980@", 10), 
+                        email: "grzegorzrobak@wp.pl", 
+                        password: bcrypt.hashSync("Grzegorz1980@", 10), 
                         firstName: "Grzegorz", 
-                        secondName: "Tygrysiak", 
+                        secondName: "Robk", 
                         studentId: 2
                     }
                 );
