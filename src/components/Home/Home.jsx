@@ -131,7 +131,7 @@ export default function Home() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.greetingBox}>
-          <Typography variant="h3" gutterBottom>Dzień dobry, {userData.firstName}</Typography>
+          <Typography variant="h3" gutterBottom>Dzień dobry, {userData ? userData.firstName : "uzytkowniku"}</Typography>
           <Typography variant="h4" gutterBottom>Dzisiaj jest {currentDate}</Typography>
         </div>
 
