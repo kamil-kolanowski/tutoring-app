@@ -1,23 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Teachers.module.scss';
-import { Typography, Avatar } from '@mui/material';
-import { getTeachers } from '../../functions/dbQueries';
+import { Typography, Avatar, Rating } from '@mui/material';
+import { db } from '../../functions/db';
 
 export default function Teachers() {
   const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        const teachersData = await getTeachers();
-        setTeachers(teachersData);
-      } catch (error) {
-        console.error("Błąd podczas pobierania korepetytorów:", error);
-      }
-    };
-
-    fetchTeachers();
-  }, []);
+      const fetchTeachersRatings = async () => {
+        try {
+          const teachersList = await db.teachers.toArray(); 
+          const teachersWithRatings = await Promise.all(teachersList.map(async (teacher) => {
+            const reviews = await db.reviews.where('teacherId').equals(teacher.teacherId).toArray();
+            const averageRating = reviews.reduce((sum, review) => sum + Number(review.stars), 0) / reviews.length;
+            
+            return {
+              ...teacher,
+              averageRating: isNaN(averageRating) ? 0 : averageRating
+            };
+          }));
+  
+          setTeachers(teachersWithRatings);
+        } catch (error) {
+          console.error("Błąd podczas pobierania nauczycieli i ocen:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchTeachersRatings();
+    }, []); 
 
   return (
     <div className={styles.container}>
@@ -45,6 +58,7 @@ export default function Teachers() {
                       </p>
                     );
                   })}
+                  <Rating name="read-only" value={teacher.averageRating ? teacher.averageRating : 0} readOnly precision={0.1} />
                 </div>
               );
             })}

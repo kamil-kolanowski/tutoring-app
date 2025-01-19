@@ -70,7 +70,7 @@ const addNew = async () => {
                         email: "grzegorzrobak@wp.pl", 
                         password: bcrypt.hashSync("Grzegorz1980@", 10), 
                         firstName: "Grzegorz", 
-                        secondName: "Robk", 
+                        secondName: "Robak", 
                         studentId: 2
                     }
                 );
@@ -87,28 +87,37 @@ const addNew = async () => {
                 db.lessons.bulkAdd([
                     {
                         teacherId: 1, 
-                        studentId: 7, 
+                        studentId: 1, 
                         subject: 'matematyka', 
-                        lessonDate: '05-01-2025', 
+                        lessonDate: '22-01-2025', 
                         lessonTime: '10:00',
                         price: 120, 
-                        status: 'Wolny termin'
-                    },
-                    {
-                        teacherId: 2, 
-                        studentId: 7, 
-                        subject: 'język polski', 
-                        lessonDate: '09-01-2025',
-                        lessonTime: "12:00",
-                        price: 90, 
-                        status: 'Wolny termin'
+                        status: 'Zapisano'
                     },
                     {
                         teacherId: 1, 
-                        studentId: 7, 
+                        studentId: 2, 
+                        subject: 'język polski', 
+                        lessonDate: '24-01-2025',
+                        lessonTime: "12:00",
+                        price: 90, 
+                        status: 'Zapisano'
+                    },
+                    {
+                        teacherId: 2, 
+                        studentId: 2, 
                         subject: 'matematyka', 
-                        lessonDate: '12-01-2025', 
+                        lessonDate: '23-01-2025', 
                         lessonTime: "17:40",
+                        price: 120, 
+                        status: 'Zapisano'
+                    },
+                    {
+                        teacherId: 2, 
+                        studentId: null, 
+                        subject: 'matematyka', 
+                        lessonDate: '25-01-2025', 
+                        lessonTime: "19:30",
                         price: 120, 
                         status: 'Wolny termin'
                     }

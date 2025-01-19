@@ -46,7 +46,7 @@ export const getTeachers = async () => {
 }
 
 export const lessonCancel = async ( lessonId) => {
-    const updated = await db.lessons.update(lessonId, { studentId: null });
+    const updated = await db.lessons.update(lessonId, { studentId: null , status: "Wolny termin"});
 
     if (updated) {
         return "Pomyślnie anulowano lekcję.";

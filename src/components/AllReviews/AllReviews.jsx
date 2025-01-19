@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../functions/db'; // Import bazy danych Dexie
+import { db } from '../../functions/db';
 import { Typography, CircularProgress } from '@mui/material';
 import styles from './AllReviews.module.scss'
 

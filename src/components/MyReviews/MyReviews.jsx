@@ -44,7 +44,7 @@ export default function MyReviews() {
 
         {reviews.length > 0 && (
           <Box className={styles.averageRating}>
-            <Typography variant="h5" gutterBottom>Średnia ocena: {averageRating}</Typography>
+            <Typography variant="h5" gutterBottom>Średnia ocena: {averageRating.toFixed(1)}</Typography>
             <Rating name="read-only" value={averageRating} readOnly precision={0.1} />
           </Box>
         )}
